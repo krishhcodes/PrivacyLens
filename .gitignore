@@ -9,3 +9,4 @@ backend/.env
 node_modules/
 dist/
 .venv/
+!frontend/.env.production

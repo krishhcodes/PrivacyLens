@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ConsentScope",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "See what each site can access. Understand the risks. Take control.",
   "permissions": ["contentSettings", "activeTab", "scripting", "storage"],
   "host_permissions": [
@@ -21,7 +21,7 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
+      "matches": ["http://localhost/*", "http://127.0.0.1/*", "https://privacy-lens-git-main-krishh2.vercel.app/*"],
       "js": ["bridge.js"],
       "run_at": "document_start"
     }
