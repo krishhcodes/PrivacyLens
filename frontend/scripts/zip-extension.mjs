@@ -1,8 +1,9 @@
 // Packs ../extension into public/consentscope-extension.zip so the website's Extension page can offer it
 // as a download. Runs before every build, so the zip always matches the extension in the repo.
+// Also copies ../scanner/scan.py next to it, for importing every past permission at once.
 // Plain Node (no zip tool needed on the build server).
 import { deflateRawSync } from 'node:zlib';
-import { readdirSync, readFileSync, statSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from 'node:fs';
 import { join, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,6 +11,13 @@ const here = dirname(fileURLToPath(import.meta.url));
 const src = join(here, '..', '..', 'extension');
 const out = join(here, '..', 'public', 'consentscope-extension.zip');
 const folder = 'consentscope-extension/'; // unzips to one folder you pick in "Load unpacked"
+
+const scanner = join(here, '..', '..', 'scanner', 'scan.py');
+if (existsSync(scanner)) {
+  mkdirSync(join(here, '..', 'public'), { recursive: true });
+  copyFileSync(scanner, join(here, '..', 'public', 'consentscope-scan.py'));
+  console.log('zip-extension: scanner -> public/consentscope-scan.py');
+}
 
 if (!existsSync(src)) {
   console.warn(`zip-extension: ${src} not found, skipping the extension download.`);

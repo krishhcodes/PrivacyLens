@@ -23,3 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 public/consentscope-extension.zip
+public/consentscope-scan.py
