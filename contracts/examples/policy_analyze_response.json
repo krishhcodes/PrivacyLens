@@ -1,0 +1,58 @@
+{
+  "origin": "http://localhost:5500",
+  "finding_count": 4,
+  "findings": [
+    {
+      "id": "f-uuid-1",
+      "origin": "http://localhost:5500",
+      "excerpt": "We collect your name, email address, and precise location.",
+      "char_start": 0,
+      "char_end": 57,
+      "category": "collection",
+      "rule_id": "COL-01",
+      "explanation": "The policy states that precise location is collected. This is a sensitive data type.",
+      "recommendation": "Consider whether this site genuinely needs your precise location.",
+      "evidence_type": "explicit_statement",
+      "provenance": "policy_declared"
+    },
+    {
+      "id": "f-uuid-2",
+      "origin": "http://localhost:5500",
+      "excerpt": "We share data with advertising partners to deliver targeted ads.",
+      "char_start": 59,
+      "char_end": 122,
+      "category": "sharing",
+      "rule_id": "SHARE-01",
+      "explanation": "The policy explicitly states that your data is shared with advertising partners. This may mean ads are targeted using your activity on this site.",
+      "recommendation": "Check whether the site offers an opt-out from ad targeting.",
+      "evidence_type": "explicit_statement",
+      "provenance": "policy_declared"
+    },
+    {
+      "id": "f-uuid-3",
+      "origin": "http://localhost:5500",
+      "excerpt": "We retain your information as long as necessary.",
+      "char_start": 124,
+      "char_end": 172,
+      "category": "retention",
+      "rule_id": "RET-02",
+      "explanation": "'As long as necessary' is vague. It gives no concrete timeframe for how long your data is kept.",
+      "recommendation": "Look for a more specific retention period or ask the service directly.",
+      "evidence_type": "keyword_match_review",
+      "provenance": "inferred"
+    },
+    {
+      "id": "f-uuid-4",
+      "origin": "http://localhost:5500",
+      "excerpt": "You may request deletion of your account by contacting us.",
+      "char_start": 174,
+      "char_end": 232,
+      "category": "deletion",
+      "rule_id": "DEL-01",
+      "explanation": "The policy offers a deletion mechanism. This is a positive sign.",
+      "recommendation": "Note the process (contacting support) in case you want to delete your account later.",
+      "evidence_type": "explicit_statement",
+      "provenance": "policy_declared"
+    }
+  ]
+}

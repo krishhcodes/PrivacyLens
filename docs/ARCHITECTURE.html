@@ -1,0 +1,196 @@
+<title>ConsentScope Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one readable column; diagrams get full width in scrollable frames; flow steps as a numbered list (they are a real sequence). */
+:root {
+  --bg: #f7f5ef; --surface: #ffffff; --fg: #1d1b16; --muted: #6b6558; --line: #e2dccd;
+  --accent: #9a7414; --accent-soft: #f1e7c9; --ok: #1f7a55; --warn: #a15c07; --bad: #b42335;
+  --display: "Cinzel", Georgia, serif; --body: "Plus Jakarta Sans", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b0c10; --surface: #13141b; --fg: #f1eee6; --muted: #a29d90; --line: #2a2a33;
+  --accent: #d4af37; --accent-soft: #2a2412; --ok: #40d9a2; --warn: #ffb454; --bad: #ff6b7a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0b0c10; --surface: #13141b; --fg: #f1eee6; --muted: #a29d90; --line: #2a2a33;
+  --accent: #d4af37; --accent-soft: #2a2412; --ok: #40d9a2; --warn: #ffb454; --bad: #ff6b7a; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body); }
+.wrap { max-width: 920px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px; display: grid; gap: 40px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: .02em; }
+h1 { font-size: clamp(28px, 5vw, 40px); }
+h2 { font-size: 22px; }
+h3 { margin: 0; font-size: 15px; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+.lede { color: var(--muted); }
+section { display: grid; gap: 14px; min-width: 0; }
+.frame { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; overflow-x: auto; }
+code { font: 13px var(--mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+.parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.part { border-top: 2px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; min-width: 0; }
+.part .where { font: 12px var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+ol.steps li { padding-left: 4px; }
+ol.steps li::marker { font-family: var(--mono); color: var(--accent); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap; }
+.pill { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.pill.live { color: var(--ok); border-color: var(--ok); }
+.pill.future { color: var(--warn); border-color: var(--warn); }
+.note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); }
+pre.mermaid { margin: 0; background: transparent; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <span class="eyebrow">ConsentScope · PrivacyLens</span>
+    <h1>ConsentScope Architecture</h1>
+    <p class="lede">How site permissions flow from your browser to a local backend that scores them, and how you see and act on the results. Everything runs on your laptop; the only outside call is the optional Google Safe Browsing check.</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">The pieces</span>
+    <h2>Five parts, one database</h2>
+    <div class="parts">
+      <div class="part"><h3>Chrome extension (MV3)</h3><p>Reads and changes each site's location, camera, microphone and notification settings. Records changes as you browse.</p><span class="where">extension/ · manifest.json, sw.js, watch.js, bridge.js, popup</span></div>
+      <div class="part"><h3>Local scanner</h3><p>One-off import of every saved site rule in Chrome, Edge and Brave on this laptop.</p><span class="where">scanner/scan.py</span></div>
+      <div class="part"><h3>Backend API</h3><p>Stores audits, infers each site's purpose, finds mismatches, analyzes policies, scores risk, checks Safe Browsing.</p><span class="where">backend/ · FastAPI + SQLite · 127.0.0.1:8000</span></div>
+      <div class="part"><h3>PrivacyLens website</h3><p>Command Centre, Privacy Scanner, Policy Analyzer, Privacy Report, Settings. Refreshes every 5 s.</p><span class="where">frontend/ · React + Vite · localhost:5180</span></div>
+      <div class="part"><h3>Google Safe Browsing</h3><p>Optional. Flags malware and phishing sites. Only the domains of audited sites are sent; results cached 24 h.</p><span class="where">GOOGLE_SAFE_BROWSING_API_KEY in backend/.env</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">System diagram</span>
+    <h2>Who talks to whom</h2>
+    <div class="frame">
+<pre class="mermaid">
+flowchart LR
+  subgraph Browser["Your browser (Chrome / Edge)"]
+    W["watch.js<br/>on every site"]
+    SW["sw.js<br/>service worker"]
+    P["Popup<br/>(extension icon)"]
+    B["bridge.js<br/>on the website"]
+    CS[("Chrome site settings<br/>contentSettings")]
+    UI["PrivacyLens website<br/>localhost:5180"]
+  end
+  SC["scanner/scan.py"] -->|"reads Preferences files"| PF[("Chrome / Edge / Brave<br/>saved rules")]
+  W -->|"permission changed"| SW
+  P --> SW
+  UI -->|"Block / Ask / Undo"| B --> SW
+  SW <-->|"read / set"| CS
+  SW -->|"POST /audits, /actions"| API
+  SC -->|"POST /audits (local_scan)"| API
+  UI -->|"GET /sites, POST /policy/analyze"| API
+  subgraph Laptop["Backend · 127.0.0.1:8000"]
+    API["FastAPI"] --> R["Rules: purpose,<br/>mismatch, policy, score"]
+    API --> DB[("SQLite<br/>consentscope.db")]
+  end
+  API -.->|"domain only, cached 24 h"| G["Google Safe Browsing"]
+</pre>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">User workflow</span>
+    <h2>Setting up, once</h2>
+    <ol class="steps">
+      <li>Load the extension: <code>chrome://extensions</code> → Developer mode → Load unpacked → <code>consentscope\extension</code>.</li>
+      <li>Optional: put your Google Safe Browsing key in <code>backend\.env</code>.</li>
+      <li>Start the backend: double-click <code>backend\run.bat</code> (keep the window open).</li>
+      <li>Start the website: <code>npm run dev</code> in <code>frontend</code>, then open <code>http://localhost:5180</code> in the same browser as the extension.</li>
+      <li>Optional: import existing rules with <code>python scanner\scan.py</code>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <span class="eyebrow">User workflow</span>
+    <h2>Using it day to day</h2>
+    <div class="frame">
+<pre class="mermaid">
+flowchart TD
+  A["Browse normally"] --> B{"Allow or block a permission<br/>on a site? (prompt or site-info menu)"}
+  B -- "no" --> N["Nothing recorded"]
+  B -- "yes" --> C["Extension records the site<br/>(source: auto_audit)"]
+  A2["Click the extension icon on any site"] --> C2["Popup audit: settings, purpose,<br/>mismatches, score"] --> D
+  C --> D["Backend scores it:<br/>permissions + purpose mismatch<br/>+ policy + Safe Browsing"]
+  D --> E["Site appears in the Privacy Scanner<br/>within ~5 s"]
+  E --> F{"Risky?"}
+  F -- "mismatch / unsafe" --> G["Block from the website or popup"]
+  G --> H["Extension changes the real Chrome setting,<br/>re-reads it, logs the action"] --> D
+  F -- "policy not analyzed" --> I["Paste the policy on Policy Analyzer<br/>→ Save to site"] --> D
+  E --> J["Privacy Report: printable summary"]
+</pre>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Two key flows</span>
+    <h2>What happens on a click</h2>
+    <div class="frame">
+<pre class="mermaid">
+sequenceDiagram
+  participant You
+  participant Site as chess.com tab
+  participant Ext as Extension (watch.js + sw.js)
+  participant API as Backend
+  participant Web as PrivacyLens website
+  You->>Site: Allow location
+  Site->>Ext: permission state changed
+  Ext->>Ext: read Chrome setting (allow)
+  Ext->>API: POST /audits (auto_audit)
+  API->>API: purpose = general → MIS-10 review, score 8
+  Web->>API: GET /sites (every 5 s)
+  API-->>Web: chess.com, score 8, safety status
+  You->>Web: Block location
+  Web->>Ext: bridge.js → setPermission
+  Ext->>Ext: chrome.contentSettings set block, re-read
+  Ext->>API: POST /actions + POST /audits (post_action_recheck)
+  Web->>API: GET /sites/chess.com
+  API-->>Web: score 0
+</pre>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Scoring</span>
+    <h2>Where the points come from</h2>
+    <div class="frame">
+      <table>
+        <thead><tr><th>Signal</th><th>Source</th><th>Points</th></tr></thead>
+        <tbody>
+          <tr><td>Location, camera or microphone allowed</td><td>Browser setting</td><td class="num">12 each</td></tr>
+          <tr><td>Notifications allowed</td><td>Browser setting</td><td class="num">4</td></tr>
+          <tr><td>Permission doesn't fit the site's purpose</td><td>Keyword purpose + rule table</td><td class="num">20 high / 8 review (replaces the above)</td></tr>
+          <tr><td>Policy declares sale of data</td><td>Policy rules</td><td class="num">18</td></tr>
+          <tr><td>Policy declares third-party sharing</td><td>Policy rules</td><td class="num">12</td></tr>
+          <tr><td>Vague retention / no deletion route</td><td>Policy rules</td><td class="num">8 each</td></tr>
+          <tr><td>Listed by Google Safe Browsing</td><td>Google API</td><td class="num">50</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Score = sum, capped at 100. Bands: 0–24 low, 25–49 moderate, 50–74 elevated, 75–100 high. The Command Centre health number is 100 minus the average site score. No AI model is involved; every point traces to one setting or one sentence.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Status</span>
+    <h2>What works today</h2>
+    <div class="frame">
+      <table>
+        <thead><tr><th>Feature</th><th>State</th></tr></thead>
+        <tbody>
+          <tr><td>Command Centre, Privacy Scanner, Policy Analyzer, Privacy Report, Settings</td><td><span class="pill live">Live, backend data</span></td></tr>
+          <tr><td>Automatic recording while browsing</td><td><span class="pill live">Live</span></td></tr>
+          <tr><td>Block / Ask / Undo from the website and popup</td><td><span class="pill live">Live, via extension</span></td></tr>
+          <tr><td>Google Safe Browsing badge and filter</td><td><span class="pill live">Live once the key is set</span></td></tr>
+          <tr><td>Exposure Map</td><td><span class="pill future">Future scope, demo data</span></td></tr>
+          <tr><td>What-If Simulator</td><td><span class="pill future">Future scope, estimates</span></td></tr>
+          <tr><td>Manual purpose override, hosting on Vercel + Render</td><td><span class="pill future">Future scope</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

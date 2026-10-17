@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ConsentScope</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <header>
+    <div>
+      <div id="site" class="site">ConsentScope</div>
+      <div id="audited" class="muted mono"></div>
+    </div>
+    <span id="dot" class="dot" title="Analysis service"></span>
+  </header>
+  <div id="welcome" class="welcome" hidden>
+    <b>Welcome to ConsentScope.</b> Open any website and click the ConsentScope icon to see what it can access.
+    Chrome warned that this extension can change site settings: that's only used when you press Block or Reset.
+  </div>
+  <main>
+    <div id="ledger" class="ledger"><div class="skeleton">Reading Chrome's settings…</div></div>
+    <div id="reload" class="reload" hidden>Saved. Reload the page for the site to see the change. <button id="reload-btn" class="small">Reload</button></div>
+    <div id="risk" class="risk-area"></div>
+    <div id="findings"></div>
+  </main>
+  <footer>
+    <button id="open-full" class="primary">Open full audit</button>
+    <button id="report" class="link">Export report</button>
+  </footer>
+  <div id="toast" class="toast" hidden></div>
+  <div id="confirm" class="confirm" hidden>
+    <p id="confirm-text"></p>
+    <div class="row end"><button id="confirm-cancel">Cancel</button><button id="confirm-ok" class="primary"></button></div>
+  </div>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

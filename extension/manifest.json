@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "ConsentScope",
+  "version": "0.3.0",
+  "description": "See what each site can access. Understand the risks. Take control.",
+  "permissions": ["contentSettings", "activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8000/*",
+    "https://*.onrender.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png" }
+  },
+  "background": { "service_worker": "sw.js", "type": "module" },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["watch.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": { "48": "icons/icon48.png", "128": "icons/icon128.png" }
+}

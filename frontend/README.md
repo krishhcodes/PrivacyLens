@@ -1,0 +1,98 @@
+# 🛡️ PRIVACYLENS
+### Cinematic Privacy Intelligence & Mock Extension Dashboard
+*Obsidian Black & Metallic Champagne Gold Luxury Cybersecurity Experience*
+
+---
+
+## 💎 Project Overview
+**PrivacyLens** is an award-winning data privacy intelligence platform designed for hackathon demonstration. It delivers a cinematic digital vault experience combining luxury physical aesthetic, tactile interactions, and deterministic mock privacy audit services.
+
+The entire application runs locally with zero external backend dependencies, zero API keys, and zero real browser snooping, while faithfully simulating a production Chrome Manifest V3 privacy extension and enterprise risk engine.
+
+---
+
+## ✨ Key Cinematic & Architectural Features
+
+1. **Cinematic Golden-Lock Vault Intro**
+   - Obsidian vault environment (`#050505`) with ambient gold aura, concentric orbital rings, and floating dust motes.
+   - Hand-crafted 3D SVG metallic lock with brushed textures and specular reflection sweeps.
+   - Mechanical unlatching animation (`rotate(-32deg)`), golden keyhole bloom, and particle scatter.
+   - Keyboard accessible (`Escape` to skip, `Enter`/`Space` to unlock), session persistence (`sessionStorage`), and instant replay from TopBar and Settings.
+
+2. **Torch-Style Custom Cursor**
+   - Precise central focus point with a soft gold halo beam that tracks cursor motion in real time via `requestAnimationFrame`.
+   - Dynamic elevation over interactive cards and buttons.
+   - Graceful fallback for touchscreens and `prefers-reduced-motion`.
+
+3. **Living Glass Cards & Insights Carousel**
+   - Dynamic pointer-following radial border sheen and subtle 3D tilt across UI cards.
+   - Draggable horizontal insights carousel on the Command Centre highlighting Rule MIS-01 purpose mismatches, PocketCalc alerts, and +48 drift deltas.
+
+4. **10 Interactive Cyber Intelligence Views**
+   - **Command Centre (`/`):** Network Risk Index gauge, aggregate posture, quick revoke actions.
+   - **Privacy Scanner (`/scanner`):** Chrome MV3 ContentSettings simulation and site ledger table.
+   - **Exposure Topology Map (`/exposure`):** Interactive SVG node graph mapping Identity → Permissions → Data Flows → Ad Trackers with particle streams and inspector drawer.
+   - **Permission Intelligence (`/permissions`):** Rule MIS-01 mismatch engine comparing granted permissions against declared application purpose profiles.
+   - **Policy Document Workspace (`/policy`):** Sentence-level audit with extracted offsets, ambiguity scoring, and data retention flags.
+   - **Privacy Drift Detector (`/drift`):** Baseline comparison (v1.0 vs v2.1) showing permission creep and score differential.
+   - **What-If Risk Sandbox (`/simulator`):** Interactive toggle matrix simulating prospective permission policies on aggregate risk.
+   - **Remediation Action Centre (`/recommendations`):** Deterministic hardening actions with 1-click execution.
+   - **Executive Audit Dossier (`/reports`):** Formal dossier with browser print-to-PDF formatting.
+   - **Platform Settings (`/settings`):** Simulation latency slider, localStorage state exporter, and factory reset modal.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Start Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:5180](http://localhost:5180) in your browser.
+
+### 3. Production Build
+```bash
+npm run build
+```
+Build output is saved to `./dist`.
+
+---
+
+## 📂 Project Directory Structure
+
+```text
+PrivacyLens/
+├── docs/                      # Original mock data schemas & handoff specs
+│   ├── FRONTEND_HANDOFF.md    # API contract & chrome MV3 guidance
+│   ├── sites_list.json        # Seeded site fixture
+│   └── assessment_response.json
+├── dist/                      # Production-ready bundle
+├── public/                    # Favicons and SVG badges
+├── src/
+│   ├── assets/                # Visual media assets
+│   ├── components/
+│   │   ├── common/            # ScoreGauge, GoldParticles, GoldToast, Badges
+│   │   ├── exposure/          # Interactive SVG ExposureGraph
+│   │   ├── layout/            # AppShell, TopBar, Sidebar
+│   │   └── scanner/           # ExtensionPopupSim, SiteLedgerTable
+│   ├── data/                  # Deterministic mock databases (sites, drift, recs)
+│   ├── experience/            # Cinematic engine: VaultIntro, GoldenLock, TorchCursor, GlassCard
+│   ├── pages/                 # 10 dedicated feature pages
+│   ├── services/              # Mock Chrome MV3 & Risk engine services
+│   ├── types/                 # TypeScript interfaces and privacy schemas
+│   ├── App.tsx                # Route tree, IntroProvider, and global viewport
+│   ├── index.css              # Obsidian & Champagne Gold styling & keyframes
+│   └── main.tsx               # React 19 entry point
+├── package.json
+└── vite.config.ts
+```
+
+---
+
+## 🛡️ Prototype Disclosure
+All assessments, risk scores, and data flow topologies in PrivacyLens are generated by deterministic local mock services for hackathon demonstration. No live tracking, remote network inspection, or real device surveillance occurs.

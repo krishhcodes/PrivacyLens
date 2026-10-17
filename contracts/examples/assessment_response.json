@@ -1,0 +1,38 @@
+{
+  "origin": "http://localhost:5500",
+  "purpose_profile": "calculator",
+  "purpose_source": "inferred",
+  "mismatches": [
+    {
+      "permission": "location",
+      "browser_setting": "allow",
+      "page_state": "granted",
+      "profile": "calculator",
+      "rule_id": "MIS-01",
+      "severity": "high",
+      "explanation": "A calculator rarely needs your location. This combination merits review.",
+      "limitation_note": "Inference: based on the site's assumed purpose, not on observed data use.",
+      "provenance": "inferred"
+    }
+  ],
+  "risk": {
+    "score": 20,
+    "band": "low",
+    "completeness": "partial",
+    "factors": [
+      {
+        "factor_id": "MIS-01-location",
+        "label": "Location mismatch (calculator)",
+        "points": 20,
+        "provenance": "inferred",
+        "evidence_refs": ["obs-uuid-1"],
+        "explanation": "Location is allowed for a site classified as a calculator."
+      }
+    ],
+    "missing": [
+      "Privacy policy not yet analyzed — policy factors not included."
+    ],
+    "assessed_at": "2026-10-14T06:16:00Z",
+    "disclaimer": "Indicative privacy-exposure assessment. Not a security rating, legal finding, or proof of misuse."
+  }
+}

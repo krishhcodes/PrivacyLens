@@ -1,0 +1,91 @@
+{
+ "profile": {
+  "content_settings": {
+   "exceptions": {
+    "geolocation": {
+     "http://localhost:5500,*": {
+      "last_modified": "13372512000000000",
+      "setting": 1
+     },
+     "https://maps.example.com:443,*": {
+      "last_modified": "13372000000000000",
+      "setting": 1
+     },
+     "https://[*.]wildcard.example,*": {
+      "setting": 1
+     }
+    },
+    "geolocation_with_options": {
+     "https://weather.example:443,*": {
+      "last_modified": "13372100000000000",
+      "setting": {
+       "setting": 1
+      }
+     }
+    },
+    "media_stream_camera": {
+     "https://meet.example.com:443,*": {
+      "last_modified": "13371000000000000",
+      "setting": 1
+     },
+     "http://localhost:5500,*": {
+      "last_modified": "13372512000000000",
+      "setting": 2
+     }
+    },
+    "media_stream_mic": {
+     "https://meet.example.com:443,*": {
+      "last_modified": "13371000000000000",
+      "setting": 1
+     }
+    },
+    "notifications": {
+     "https://news.example:443,*": {
+      "last_modified": "13370000000000000",
+      "setting": 1
+     },
+     "chrome-extension://abc,*": {
+      "setting": 1
+     }
+    },
+    "media_engagement": {
+     "http://localhost:5500,*": {
+      "setting": {
+       "visits": 1
+      }
+     }
+    },
+    "cookies": {
+     "https://x.example:443,*": {
+      "setting": 2
+     }
+    },
+    "popups": {
+     "https://news.example:443,*": {
+      "last_modified": "13370000000000000",
+      "setting": 1
+     }
+    },
+    "clipboard": {
+     "https://docs.example:443,*": {
+      "last_modified": "13370500000000000",
+      "setting": 1
+     }
+    },
+    "usb_guard": {
+     "https://flash.example:443,*": {
+      "last_modified": "13370600000000000",
+      "setting": 2
+     }
+    },
+    "usb_chooser_data": {
+     "https://flash.example:443,*": {
+      "setting": {
+       "chosen-objects": []
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,101 @@
+{
+  "origin": "http://localhost:5500",
+  "display_name": "localhost:5500",
+  "purpose_profile": "calculator",
+  "purpose_source": "inferred",
+  "purpose_confidence": "medium",
+  "first_audited_at": "2026-10-14T06:10:00Z",
+  "last_audited_at": "2026-10-14T06:15:22Z",
+  "latest_observations": [
+    {
+      "id": "obs-uuid-1",
+      "permission": "location",
+      "browser_setting": "allow",
+      "page_state": "granted",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-2",
+      "permission": "camera",
+      "browser_setting": "ask",
+      "page_state": "prompt",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-3",
+      "permission": "microphone",
+      "browser_setting": "ask",
+      "page_state": "prompt",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-4",
+      "permission": "notifications",
+      "browser_setting": "block",
+      "page_state": "denied",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    }
+  ],
+  "band": null,
+  "score": null,
+  "completeness": null,
+  "observations": [
+    {
+      "id": "obs-uuid-1",
+      "permission": "location",
+      "browser_setting": "allow",
+      "page_state": "granted",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-2",
+      "permission": "camera",
+      "browser_setting": "ask",
+      "page_state": "prompt",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-3",
+      "permission": "microphone",
+      "browser_setting": "ask",
+      "page_state": "prompt",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    },
+    {
+      "id": "obs-uuid-4",
+      "permission": "notifications",
+      "browser_setting": "block",
+      "page_state": "denied",
+      "observed_at": "2026-10-14T06:12:07Z",
+      "source": "popup_audit",
+      "provenance": "observed"
+    }
+  ],
+  "actions": [
+    {
+      "id": "act-uuid-1",
+      "permission": "location",
+      "action": "block",
+      "before_setting": "allow",
+      "after_setting": "block",
+      "succeeded": true,
+      "acted_at": "2026-10-14T06:15:22Z"
+    }
+  ],
+  "policy_findings": [],
+  "assessment": null
+}

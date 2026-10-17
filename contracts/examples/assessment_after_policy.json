@@ -1,0 +1,68 @@
+{
+  "origin": "http://localhost:5500",
+  "purpose_profile": "calculator",
+  "purpose_source": "inferred",
+  "mismatches": [
+    {
+      "permission": "location",
+      "browser_setting": "allow",
+      "page_state": "granted",
+      "profile": "calculator",
+      "rule_id": "MIS-01",
+      "severity": "high",
+      "explanation": "A calculator rarely needs your location. This combination merits review.",
+      "limitation_note": "Inference: based on the site's assumed purpose, not on observed data use.",
+      "provenance": "inferred"
+    }
+  ],
+  "risk": {
+    "score": 40,
+    "band": "moderate",
+    "completeness": "full",
+    "factors": [
+      {
+        "factor_id": "MIS-01-location",
+        "label": "Location mismatch (calculator)",
+        "points": 20,
+        "provenance": "inferred",
+        "evidence_refs": [
+          "obs-uuid-1"
+        ],
+        "explanation": "Location is allowed for a site classified as a calculator. Replaces base location points."
+      },
+      {
+        "factor_id": "POLICY-SHARE",
+        "label": "Policy declares third-party sharing",
+        "points": 12,
+        "provenance": "policy_declared",
+        "evidence_refs": [
+          "f-uuid-2"
+        ],
+        "explanation": "The policy explicitly states data is shared with advertising partners."
+      },
+      {
+        "factor_id": "POLICY-RETAIN",
+        "label": "Retention vague or indefinite",
+        "points": 8,
+        "provenance": "inferred",
+        "evidence_refs": [
+          "f-uuid-3"
+        ],
+        "explanation": "'As long as necessary' gives no concrete timeframe."
+      },
+      {
+        "factor_id": "PERM-NOTIFICATIONS",
+        "label": "Notifications blocked",
+        "points": 0,
+        "provenance": "observed",
+        "evidence_refs": [
+          "obs-uuid-4"
+        ],
+        "explanation": "Notifications are blocked \u2014 no points added."
+      }
+    ],
+    "missing": [],
+    "assessed_at": "2026-10-14T06:20:00Z",
+    "disclaimer": "Indicative privacy-exposure assessment. Not a security rating, legal finding, or proof of misuse."
+  }
+}

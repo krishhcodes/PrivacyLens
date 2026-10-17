@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PocketCalc — Calculator</title>
+<style>body{font:16px system-ui;max-width:420px;margin:40px auto;padding:0 16px}input,button{font:inherit;padding:8px}#out{margin-top:12px}</style></head>
+<body>
+<h1>PocketCalc</h1>
+<p>A simple calculator. (Demo site for ConsentScope: it asks for permissions it doesn't need.)</p>
+<input id="expr" value="12*7" aria-label="Expression"> <button id="calc">=</button>
+<div id="out"></div>
+<p><button id="tax">Find tax rate near me</button> <button id="scan">Scan receipt</button></p>
+<div id="perm"></div>
+<script>
+const out = (t) => (document.getElementById("perm").textContent = t);
+document.getElementById("calc").onclick = () => {
+  const e = document.getElementById("expr").value;
+  document.getElementById("out").textContent = /^[\d+\-*/(). ]+$/.test(e) ? String(Function(`return (${e})`)()) : "Numbers only";
+};
+document.getElementById("tax").onclick = () => navigator.geolocation.getCurrentPosition(
+  (p) => out(`Location shared: ${p.coords.latitude.toFixed(2)}, ${p.coords.longitude.toFixed(2)}`),
+  (e) => out(`Location error: ${e.message}`));
+document.getElementById("scan").onclick = () => navigator.mediaDevices.getUserMedia({ video: true })
+  .then((s) => { out("Camera on"); s.getTracks().forEach((t) => t.stop()); })
+  .catch((e) => out(`Camera error: ${e.message}`));
+</script>
+<p><a href="privacy.html">Privacy policy</a></p>
+</body></html>

@@ -1,0 +1,10 @@
+{
+  "id": "act-uuid-1",
+  "permission": "location",
+  "action": "block",
+  "before_setting": "allow",
+  "after_setting": "block",
+  "succeeded": true,
+  "error": null,
+  "acted_at": "2026-10-14T06:15:22Z"
+}

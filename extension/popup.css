@@ -1,0 +1,51 @@
+:root { --paper:#FAF7F2; --card:#fff; --rule:#E7E0D5; --ink:#1F1B16; --ink-2:#5B544A;
+  --allow-bg:#FEF3C7; --allow-fg:#B45309; --high-bg:#FEE2E2; --high-fg:#B91C1C;
+  --protect-bg:#DCFCE7; --protect-fg:#15803D; --neutral-bg:#F1F5F9; --neutral-fg:#475569; --focus:#2563EB; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { width: 360px; min-height: 400px; max-height: 560px; overflow-y: auto; margin: 0; background: var(--paper); color: var(--ink); font: 14px/1.45 Inter, system-ui, sans-serif; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; }
+.muted { color: var(--ink-2); }
+header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--card); border-bottom: 1px solid var(--rule); }
+.site { font-weight: 600; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--neutral-fg); }
+.dot.on { background: var(--protect-fg); }
+main { padding: 8px 16px; }
+footer { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--rule); background: var(--card); position: sticky; bottom: 0; }
+button { font: inherit; border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+button.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+button.small { padding: 2px 8px; font-size: 12px; }
+button.link { border: none; background: none; text-decoration: underline; }
+button:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.welcome { margin: 12px 16px 0; padding: 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--card); font-size: 13px; }
+.ledger { border-top: 1px solid var(--rule); }
+.lrow { padding: 8px 0; border-bottom: 1px solid var(--rule); transition: background .6s; }
+.lrow.flash { background: var(--protect-bg); }
+.lrow .top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.lrow .perm { font-weight: 600; }
+.lrow .vals { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.lrow .btns { display: flex; gap: 6px; margin-top: 6px; }
+.lrow .why { font-size: 12px; color: var(--high-fg); margin-top: 4px; }
+.chip { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; }
+.s-allow { background: var(--allow-bg); color: var(--allow-fg); }
+.s-block { background: var(--protect-bg); color: var(--protect-fg); }
+.s-ask, .s-unknown, .s-unsupported { background: var(--neutral-bg); color: var(--neutral-fg); }
+.notrack { padding: 8px 0; color: var(--ink-2); font-size: 12px; }
+.skeleton, .empty { padding: 24px 0; color: var(--ink-2); text-align: center; }
+.risk-area { margin-top: 10px; }
+.risk { display: inline-block; padding: 4px 10px; border-radius: 8px; font-weight: 600; }
+.band-low { background: var(--protect-bg); color: var(--protect-fg); }
+.band-moderate { background: var(--allow-bg); color: var(--allow-fg); }
+.band-elevated, .band-high { background: var(--high-bg); color: var(--high-fg); }
+.offline { font-size: 12px; color: var(--ink-2); }
+.mcard { border: 1px solid var(--rule); border-left: 3px solid var(--allow-fg); border-radius: 8px; padding: 6px 10px; margin: 8px 0; background: var(--card); font-size: 13px; }
+.mcard.sev-high { border-left-color: var(--high-fg); }
+.note { font-size: 11px; color: var(--ink-2); font-style: italic; }
+.reload { margin-top: 8px; font-size: 12px; padding: 8px; border-radius: 8px; background: var(--allow-bg); }
+.toast { position: fixed; left: 12px; right: 12px; bottom: 72px; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; }
+.toast.error { background: var(--high-fg); }
+.toast button { background: transparent; color: inherit; border-color: currentColor; }
+.confirm { position: fixed; inset: 0; background: rgba(31,27,22,.45); display: flex; flex-direction: column; justify-content: center; padding: 16px; }
+.confirm p, .confirm .row { background: var(--card); margin: 0; padding: 12px 16px; }
+.confirm p { border-radius: 8px 8px 0 0; } .confirm .row { border-radius: 0 0 8px 8px; display: flex; gap: 8px; justify-content: flex-end; }

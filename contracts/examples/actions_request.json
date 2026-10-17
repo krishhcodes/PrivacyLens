@@ -1,0 +1,9 @@
+{
+  "origin": "http://localhost:5500",
+  "permission": "location",
+  "action": "block",
+  "before_setting": "allow",
+  "after_setting": "block",
+  "succeeded": true,
+  "acted_at": "2026-10-14T06:15:22Z"
+}

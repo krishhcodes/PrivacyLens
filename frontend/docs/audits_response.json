@@ -1,0 +1,7 @@
+{
+  "origin": "http://localhost:5500",
+  "created": true,
+  "purpose_profile": "calculator",
+  "purpose_source": "inferred",
+  "purpose_confidence": "medium"
+}

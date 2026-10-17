@@ -1,0 +1,46 @@
+{
+  "sites": [
+    {
+      "origin": "http://localhost:5500",
+      "display_name": "localhost:5500",
+      "purpose_profile": "calculator",
+      "purpose_source": "inferred",
+      "purpose_confidence": "medium",
+      "first_audited_at": "2026-10-14T06:10:00Z",
+      "last_audited_at": "2026-10-14T06:15:00Z",
+      "latest_observations": [
+        {
+          "permission": "location",
+          "browser_setting": "allow",
+          "page_state": "granted",
+          "observed_at": "2026-10-14T06:12:07Z",
+          "provenance": "observed"
+        },
+        {
+          "permission": "camera",
+          "browser_setting": "ask",
+          "page_state": "prompt",
+          "observed_at": "2026-10-14T06:12:07Z",
+          "provenance": "observed"
+        },
+        {
+          "permission": "microphone",
+          "browser_setting": "ask",
+          "page_state": "prompt",
+          "observed_at": "2026-10-14T06:12:07Z",
+          "provenance": "observed"
+        },
+        {
+          "permission": "notifications",
+          "browser_setting": "block",
+          "page_state": "denied",
+          "observed_at": "2026-10-14T06:12:07Z",
+          "provenance": "observed"
+        }
+      ],
+      "band": "low",
+      "score": 20,
+      "completeness": "partial"
+    }
+  ]
+}

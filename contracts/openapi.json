@@ -1,0 +1,1749 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ConsentScope API",
+    "description": "Analysis service for the ConsentScope extension and website. Makes no external calls.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/audits": {
+      "post": {
+        "tags": [
+          "ledger"
+        ],
+        "summary": "Post Audit",
+        "operationId": "post_audit_audits_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sites": {
+      "get": {
+        "tags": [
+          "ledger"
+        ],
+        "summary": "Get Sites",
+        "operationId": "get_sites_sites_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SitesList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Delete Sites",
+        "operationId": "delete_sites_sites_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/actions": {
+      "post": {
+        "tags": [
+          "ledger"
+        ],
+        "summary": "Post Action",
+        "operationId": "post_action_actions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionAction"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/policy/analyze": {
+      "post": {
+        "tags": [
+          "policy"
+        ],
+        "summary": "Policy Analyze",
+        "operationId": "policy_analyze_policy_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyAnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyAnalyzeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sites/{origin}/purpose": {
+      "put": {
+        "tags": [
+          "assessment"
+        ],
+        "summary": "Put Purpose",
+        "operationId": "put_purpose_sites__origin__purpose_put",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Origin"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurposeUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurposeUpdateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sites/{origin}/assessment": {
+      "get": {
+        "tags": [
+          "assessment"
+        ],
+        "summary": "Get Assessment",
+        "operationId": "get_assessment_sites__origin__assessment_get",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Origin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SiteAssessment"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sites/{origin}/report": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "Get Report",
+        "operationId": "get_report_sites__origin__report_get",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Origin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sites/{origin}": {
+      "get": {
+        "tags": [
+          "ledger"
+        ],
+        "summary": "Get Site",
+        "operationId": "get_site_sites__origin__get",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Origin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SiteDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Delete Site",
+        "operationId": "delete_site_sites__origin__delete",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Origin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionRequest": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "permission": {
+            "type": "string",
+            "enum": [
+              "location",
+              "camera",
+              "microphone",
+              "notifications"
+            ],
+            "title": "Permission"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "block",
+              "reset_ask",
+              "undo"
+            ],
+            "title": "Action"
+          },
+          "before_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "Before Setting"
+          },
+          "after_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "After Setting"
+          },
+          "succeeded": {
+            "type": "boolean",
+            "title": "Succeeded"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "acted_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acted At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origin",
+          "permission",
+          "action",
+          "before_setting",
+          "after_setting",
+          "succeeded"
+        ],
+        "title": "ActionRequest"
+      },
+      "AuditRequest": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin",
+            "description": "Any http(s) URL or origin; normalized server-side."
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "popup_audit",
+              "manual_url",
+              "post_action_recheck",
+              "simulated",
+              "local_scan",
+              "auto_audit"
+            ],
+            "title": "Source",
+            "default": "popup_audit"
+          },
+          "page_title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Title",
+            "description": "tab.title; improves purpose inference."
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionObservation"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 1,
+            "title": "Observations"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origin",
+          "observations"
+        ],
+        "title": "AuditRequest"
+      },
+      "AuditResponse": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "created": {
+            "type": "boolean",
+            "title": "Created"
+          },
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          },
+          "purpose_source": {
+            "type": "string",
+            "enum": [
+              "inferred",
+              "user"
+            ],
+            "title": "Purpose Source"
+          },
+          "purpose_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Purpose Confidence"
+          },
+          "saved": {
+            "type": "integer",
+            "title": "Saved",
+            "default": 0
+          },
+          "deduplicated": {
+            "type": "integer",
+            "title": "Deduplicated",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "created",
+          "purpose_profile",
+          "purpose_source",
+          "purpose_confidence"
+        ],
+        "title": "AuditResponse"
+      },
+      "DeleteResponse": {
+        "properties": {
+          "deleted": {
+            "type": "integer",
+            "title": "Deleted"
+          }
+        },
+        "type": "object",
+        "required": [
+          "deleted"
+        ],
+        "title": "DeleteResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "version"
+        ],
+        "title": "Health"
+      },
+      "MismatchFinding": {
+        "properties": {
+          "permission": {
+            "type": "string",
+            "enum": [
+              "location",
+              "camera",
+              "microphone",
+              "notifications"
+            ],
+            "title": "Permission"
+          },
+          "browser_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "Browser Setting"
+          },
+          "page_state": {
+            "type": "string",
+            "enum": [
+              "granted",
+              "denied",
+              "prompt",
+              "unavailable",
+              "not_checked"
+            ],
+            "title": "Page State"
+          },
+          "profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Profile"
+          },
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "review",
+              "high"
+            ],
+            "title": "Severity"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          },
+          "limitation_note": {
+            "type": "string",
+            "title": "Limitation Note"
+          },
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "policy_declared",
+              "inferred",
+              "simulated",
+              "unknown"
+            ],
+            "title": "Provenance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "permission",
+          "browser_setting",
+          "page_state",
+          "profile",
+          "rule_id",
+          "severity",
+          "explanation",
+          "limitation_note",
+          "provenance"
+        ],
+        "title": "MismatchFinding"
+      },
+      "PermissionAction": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "permission": {
+            "type": "string",
+            "enum": [
+              "location",
+              "camera",
+              "microphone",
+              "notifications"
+            ],
+            "title": "Permission"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "block",
+              "reset_ask",
+              "undo"
+            ],
+            "title": "Action"
+          },
+          "before_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "Before Setting"
+          },
+          "after_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "After Setting"
+          },
+          "succeeded": {
+            "type": "boolean",
+            "title": "Succeeded"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "acted_at": {
+            "type": "string",
+            "title": "Acted At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "permission",
+          "action",
+          "before_setting",
+          "after_setting",
+          "succeeded",
+          "acted_at"
+        ],
+        "title": "PermissionAction"
+      },
+      "PermissionObservation": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "permission": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "location",
+                  "camera",
+                  "microphone",
+                  "notifications"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "popups",
+                  "clipboard",
+                  "sensors",
+                  "automatic_downloads",
+                  "midi_sysex",
+                  "usb",
+                  "serial",
+                  "hid",
+                  "bluetooth",
+                  "file_system_write",
+                  "window_management",
+                  "idle_detection",
+                  "local_fonts",
+                  "ar",
+                  "vr",
+                  "protected_media",
+                  "background_sync",
+                  "payment_handler",
+                  "storage_access"
+                ]
+              }
+            ],
+            "title": "Permission"
+          },
+          "browser_setting": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "ask",
+              "unsupported",
+              "unknown"
+            ],
+            "title": "Browser Setting"
+          },
+          "page_state": {
+            "type": "string",
+            "enum": [
+              "granted",
+              "denied",
+              "prompt",
+              "unavailable",
+              "not_checked"
+            ],
+            "title": "Page State",
+            "default": "not_checked"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "setting_changed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Setting Changed At"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "popup_audit",
+                  "manual_url",
+                  "post_action_recheck",
+                  "simulated",
+                  "local_scan",
+                  "auto_audit"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "provenance": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "observed",
+                  "policy_declared",
+                  "inferred",
+                  "simulated",
+                  "unknown"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provenance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "permission",
+          "browser_setting"
+        ],
+        "title": "PermissionObservation"
+      },
+      "PolicyAnalyzeRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 200000,
+            "title": "Text"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "PolicyAnalyzeRequest"
+      },
+      "PolicyAnalyzeResponse": {
+        "properties": {
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          },
+          "finding_count": {
+            "type": "integer",
+            "title": "Finding Count"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyFinding"
+            },
+            "type": "array",
+            "title": "Findings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "finding_count",
+          "findings"
+        ],
+        "title": "PolicyAnalyzeResponse"
+      },
+      "PolicyFinding": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          },
+          "excerpt": {
+            "type": "string",
+            "title": "Excerpt"
+          },
+          "char_start": {
+            "type": "integer",
+            "title": "Char Start"
+          },
+          "char_end": {
+            "type": "integer",
+            "title": "Char End"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "collection",
+              "sharing",
+              "sale",
+              "retention",
+              "deletion",
+              "vague"
+            ],
+            "title": "Category"
+          },
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          },
+          "recommendation": {
+            "type": "string",
+            "title": "Recommendation"
+          },
+          "evidence_type": {
+            "type": "string",
+            "enum": [
+              "explicit_statement",
+              "keyword_match_review"
+            ],
+            "title": "Evidence Type"
+          },
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "policy_declared",
+              "inferred",
+              "simulated",
+              "unknown"
+            ],
+            "title": "Provenance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "origin",
+          "excerpt",
+          "char_start",
+          "char_end",
+          "category",
+          "rule_id",
+          "explanation",
+          "recommendation",
+          "evidence_type",
+          "provenance"
+        ],
+        "title": "PolicyFinding"
+      },
+      "PurposeUpdateRequest": {
+        "properties": {
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "purpose_profile"
+        ],
+        "title": "PurposeUpdateRequest"
+      },
+      "PurposeUpdateResponse": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          },
+          "purpose_source": {
+            "type": "string",
+            "enum": [
+              "inferred",
+              "user"
+            ],
+            "title": "Purpose Source"
+          },
+          "purpose_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Purpose Confidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "purpose_profile",
+          "purpose_source",
+          "purpose_confidence"
+        ],
+        "title": "PurposeUpdateResponse"
+      },
+      "RiskAssessment": {
+        "properties": {
+          "score": {
+            "type": "integer",
+            "title": "Score"
+          },
+          "band": {
+            "type": "string",
+            "enum": [
+              "low",
+              "moderate",
+              "elevated",
+              "high"
+            ],
+            "title": "Band"
+          },
+          "completeness": {
+            "type": "string",
+            "enum": [
+              "full",
+              "partial"
+            ],
+            "title": "Completeness"
+          },
+          "factors": {
+            "items": {
+              "$ref": "#/components/schemas/RiskFactor"
+            },
+            "type": "array",
+            "title": "Factors"
+          },
+          "missing": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing"
+          },
+          "assessed_at": {
+            "type": "string",
+            "title": "Assessed At"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "score",
+          "band",
+          "completeness",
+          "factors",
+          "missing",
+          "assessed_at",
+          "disclaimer"
+        ],
+        "title": "RiskAssessment"
+      },
+      "RiskFactor": {
+        "properties": {
+          "factor_id": {
+            "type": "string",
+            "title": "Factor Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          },
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "policy_declared",
+              "inferred",
+              "simulated",
+              "unknown"
+            ],
+            "title": "Provenance"
+          },
+          "evidence_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Refs"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "factor_id",
+          "label",
+          "points",
+          "provenance",
+          "evidence_refs",
+          "explanation"
+        ],
+        "title": "RiskFactor"
+      },
+      "Safety": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "safe",
+              "unsafe",
+              "not_checked",
+              "not_applicable",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "threats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Threats",
+            "default": []
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "Safety",
+        "description": "Google Safe Browsing result for the site (cached 24 h). not_checked = no API key set or not checked yet;\nnot_applicable = local/private address, never sent to Google."
+      },
+      "SiteAssessment": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          },
+          "purpose_source": {
+            "type": "string",
+            "enum": [
+              "inferred",
+              "user"
+            ],
+            "title": "Purpose Source"
+          },
+          "mismatches": {
+            "items": {
+              "$ref": "#/components/schemas/MismatchFinding"
+            },
+            "type": "array",
+            "title": "Mismatches"
+          },
+          "risk": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RiskAssessment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "safety": {
+            "$ref": "#/components/schemas/Safety",
+            "default": {
+              "status": "not_checked",
+              "threats": []
+            }
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "purpose_profile",
+          "purpose_source",
+          "mismatches",
+          "risk"
+        ],
+        "title": "SiteAssessment"
+      },
+      "SiteDetail": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          },
+          "purpose_source": {
+            "type": "string",
+            "enum": [
+              "inferred",
+              "user"
+            ],
+            "title": "Purpose Source"
+          },
+          "purpose_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Purpose Confidence"
+          },
+          "first_audited_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Audited At"
+          },
+          "last_audited_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Audited At"
+          },
+          "latest_observations": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionObservation"
+            },
+            "type": "array",
+            "title": "Latest Observations"
+          },
+          "band": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "moderate",
+                  "elevated",
+                  "high"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Band"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "completeness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "full",
+                  "partial"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completeness"
+          },
+          "safety": {
+            "$ref": "#/components/schemas/Safety",
+            "default": {
+              "status": "not_checked",
+              "threats": []
+            }
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionObservation"
+            },
+            "type": "array",
+            "title": "Observations"
+          },
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionAction"
+            },
+            "type": "array",
+            "title": "Actions"
+          },
+          "policy_findings": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyFinding"
+            },
+            "type": "array",
+            "title": "Policy Findings"
+          },
+          "assessment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SiteAssessment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "display_name",
+          "purpose_profile",
+          "purpose_source",
+          "purpose_confidence",
+          "first_audited_at",
+          "last_audited_at",
+          "latest_observations",
+          "band",
+          "score",
+          "completeness",
+          "observations",
+          "actions",
+          "policy_findings",
+          "assessment"
+        ],
+        "title": "SiteDetail"
+      },
+      "SiteSummary": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "purpose_profile": {
+            "type": "string",
+            "enum": [
+              "calculator",
+              "video_meeting",
+              "maps",
+              "weather",
+              "general"
+            ],
+            "title": "Purpose Profile"
+          },
+          "purpose_source": {
+            "type": "string",
+            "enum": [
+              "inferred",
+              "user"
+            ],
+            "title": "Purpose Source"
+          },
+          "purpose_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Purpose Confidence"
+          },
+          "first_audited_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Audited At"
+          },
+          "last_audited_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Audited At"
+          },
+          "latest_observations": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionObservation"
+            },
+            "type": "array",
+            "title": "Latest Observations"
+          },
+          "band": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "moderate",
+                  "elevated",
+                  "high"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Band"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "completeness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "full",
+                  "partial"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completeness"
+          },
+          "safety": {
+            "$ref": "#/components/schemas/Safety",
+            "default": {
+              "status": "not_checked",
+              "threats": []
+            }
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin",
+          "display_name",
+          "purpose_profile",
+          "purpose_source",
+          "purpose_confidence",
+          "first_audited_at",
+          "last_audited_at",
+          "latest_observations",
+          "band",
+          "score",
+          "completeness"
+        ],
+        "title": "SiteSummary"
+      },
+      "SitesList": {
+        "properties": {
+          "sites": {
+            "items": {
+              "$ref": "#/components/schemas/SiteSummary"
+            },
+            "type": "array",
+            "title": "Sites"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sites"
+        ],
+        "title": "SitesList"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

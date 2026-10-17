@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ConsentScope Mock</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">ConsentScope <span class="muted">mock frontend</span></div>
+    <div class="conn">
+      <span id="status-dot" class="dot" title="Backend status"></span>
+      <span id="status-text" class="muted">checking…</span>
+      <label class="muted">API <input id="base-url" size="22" spellcheck="false"></label>
+      <label class="toggle"><input type="checkbox" id="use-mocks"> Mock data</label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Stands in for the extension popup. Chrome APIs are simulated here. -->
+    <section class="popup card" aria-labelledby="popup-title">
+      <h2 id="popup-title">Popup <span class="muted">(simulated browser)</span></h2>
+      <div class="sim-banner">Demo data: not a real browser observation</div>
+      <label class="field">Tab URL <input id="tab-url" value="http://localhost:5500/index.html"></label>
+      <label class="field">Tab title <input id="tab-title" value="PocketCalc — Calculator"></label>
+      <div id="ledger" class="ledger"></div>
+      <div class="row">
+        <button id="audit-btn" class="primary">Audit this tab</button>
+        <span id="audited-at" class="muted mono"></span>
+      </div>
+      <div id="risk-chip" class="risk-chip"></div>
+      <div id="popup-mismatches"></div>
+    </section>
+
+    <!-- Stands in for dashboard.html -->
+    <section class="dashboard card">
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="sites" class="active">Sites</button>
+        <button role="tab" data-tab="detail">Site detail</button>
+        <button role="tab" data-tab="policy">Policy analyzer</button>
+        <button role="tab" data-tab="settings">Settings</button>
+      </nav>
+      <div id="tab-sites" class="tab"></div>
+      <div id="tab-detail" class="tab" hidden></div>
+      <div id="tab-policy" class="tab" hidden>
+        <label class="field">Origin (optional) <input id="policy-origin" value="http://localhost:5500"></label>
+        <textarea id="policy-text" rows="8" placeholder="Paste a privacy policy…"></textarea>
+        <div class="row">
+          <button id="analyze-btn" class="primary">Analyze</button>
+          <button id="sample-btn">Load sample policy</button>
+        </div>
+        <div id="policy-out"></div>
+      </div>
+      <div id="tab-settings" class="tab" hidden>
+        <p>Clear everything the backend has stored. This can't be undone.</p>
+        <button id="clear-all" class="danger">Clear all data</button>
+        <h3>Raw response</h3>
+        <pre id="raw" class="mono raw">Responses from the last API call appear here.</pre>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="confirm">
+    <form method="dialog">
+      <p id="confirm-text"></p>
+      <div class="row end">
+        <button value="cancel">Cancel</button>
+        <button value="ok" id="confirm-ok" class="primary">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
