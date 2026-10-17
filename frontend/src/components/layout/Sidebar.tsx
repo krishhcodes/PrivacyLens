@@ -8,6 +8,7 @@ import {
   Sliders,
   FileText,
   Settings,
+  Puzzle,
   Shield,
   ChevronLeft,
   ChevronRight
@@ -54,6 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     { name: 'Policy Analyzer', path: '/policy', icon: ScrollText, description: 'Policy Sentence Rules' },
     { name: 'Privacy Report', path: '/reports', icon: FileText, description: 'Printable Audit Summary' },
+    { name: 'Extension', path: '/extension', icon: Puzzle, description: 'Download & Install' },
     { name: 'System Settings', path: '/settings', icon: Settings, description: 'Connection & Preferences' },
     { name: 'Exposure Map', path: '/exposure', icon: Network, description: 'Preview · Demo Data', future: true },
     { name: 'What-If Simulator', path: '/simulator', icon: Sliders, description: 'Preview · Estimates Only', future: true }

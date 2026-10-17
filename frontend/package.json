@@ -5,8 +5,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "node scripts/zip-extension.mjs && vite",
+    "build": "node scripts/zip-extension.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

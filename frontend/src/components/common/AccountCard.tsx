@@ -49,7 +49,7 @@ export const AccountCard: React.FC = () => {
         <div className="flex justify-between items-center gap-2">
           <span className="text-[#8E8F99]">Extension:</span>
           {extension === 'linked' && <span className="text-[#40D9A2]">Linked to this account</span>}
-          {extension === 'missing' && <span className="text-amber-400">Not installed in this browser</span>}
+          {extension === 'missing' && <a href="/extension" className="text-amber-400 hover:underline">Not installed. Open the Extension tab</a>}
           {extension === 'checking' && <span className="text-white">Checking…</span>}
           {extension === 'not-linked' && (
             <button className="text-[#F5D76E] hover:underline" onClick={() => act(async () => { if (session) await linkExtension(session); })}>

@@ -12,6 +12,7 @@ import { PolicyPage } from './pages/PolicyPage';
 import { SimulatorPage } from './pages/SimulatorPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { ExtensionPage } from './pages/ExtensionPage';
 import { SignInPage } from './pages/SignInPage';
 import { authEnabled, useAuth } from './api/auth';
 import { linkExtension } from './services/accountService';
@@ -67,6 +68,7 @@ const AppFrame: React.FC = () => {
             <Route path="/policy" element={<PolicyPage />} />
             <Route path="/simulator" element={<SimulatorPage />} />
             <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/extension" element={<ExtensionPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

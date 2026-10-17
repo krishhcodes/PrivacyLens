@@ -33,7 +33,7 @@ function request(type: string, payload?: unknown, timeoutMs = TIMEOUT_MS): Promi
 
 export class ExtensionUnavailable extends Error {
   constructor() {
-    super('Install or enable the ConsentScope extension (extension/ folder, Load unpacked) to change permissions, then reload this page.');
+    super('Install or enable the ConsentScope extension (see the Extension tab) to change permissions, then reload this page.');
     this.name = 'ExtensionUnavailable';
   }
 }

@@ -2,7 +2,7 @@
 
 Plain JavaScript modules, so there's nothing to compile.
 
-**Install:** open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked** and pick this `extension/` folder.
+**Install:** download the zip from the website's **Extension** tab (built from this folder on every website build), or open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked** and pick this `extension/` folder.
 
 **Point it at a hosted backend:** edit `config.js` (`API_BASE`, `WEBSITE_URL`). If the host isn't `*.onrender.com`, add it to `host_permissions` in `manifest.json`. Then click the reload icon on the extension card.
 
