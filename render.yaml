@@ -1,16 +1,18 @@
 # Render blueprint: New > Blueprint > pick this repo. Free plan sleeps when idle and
-# its disk is wiped on restart, so stored audits reset. Fine for a demo.
+# its disk is wiped on restart, so stored audits reset until the hosted database is added.
 services:
   - type: web
     name: consentscope-api
     runtime: python
     plan: free
     rootDir: backend
-    buildCommand: pip install fastapi uvicorn pydantic
+    buildCommand: pip install -r requirements.txt
     startCommand: HOST=0.0.0.0 sh run.sh
     healthCheckPath: /health
     envVars:
       - key: CONSENTSCOPE_ALLOWED_ORIGINS
         value: https://YOUR-WEBSITE.vercel.app   # the deployed website's address
+      - key: GOOGLE_SAFE_BROWSING_API_KEY
+        sync: false   # Render asks for it on first deploy; paste the key there, never in the repo
       - key: PYTHON_VERSION
         value: 3.12.7
