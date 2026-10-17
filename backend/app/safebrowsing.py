@@ -81,7 +81,7 @@ def refresh(db: Database, origins: list[str]) -> None:
     now = datetime.now(timezone.utc)
     with db.tx() as c:
         rows = {r["origin"]: r for r in c.execute("SELECT * FROM safety_checks")}
-        known = {r[0] for r in c.execute("SELECT origin FROM websites")}
+        known = {r["origin"] for r in c.execute("SELECT DISTINCT origin FROM websites")}
     # Only audited sites are ever sent; never an arbitrary origin from a request path.
     todo = [o for o in origins if o in known and applicable(o) and _stale(rows.get(o), now)]
     for i in range(0, len(todo), BATCH):
@@ -93,7 +93,11 @@ def refresh(db: Database, origins: list[str]) -> None:
             records = [(o, "error", json.dumps([f"lookup failed: {getattr(e, 'code', '') or type(e).__name__}"])) for o in chunk]
         with db.tx() as c:
             for o, status, threats in records:
-                c.execute("INSERT OR REPLACE INTO safety_checks VALUES (?,?,?,?)", (o, status, threats, now_iso()))
+                c.execute(
+                    "INSERT INTO safety_checks (origin, status, threats, checked_at) VALUES (?,?,?,?) "
+                    "ON CONFLICT (origin) DO UPDATE SET status = excluded.status, threats = excluded.threats, "
+                    "checked_at = excluded.checked_at",
+                    (o, status, threats, now_iso()))
 
 
 def status(c, origin: str) -> dict:

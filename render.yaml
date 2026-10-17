@@ -1,5 +1,5 @@
-# Render blueprint: New > Blueprint > pick this repo. Free plan sleeps when idle and
-# its disk is wiped on restart, so stored audits reset until the hosted database is added.
+# Render blueprint: New > Blueprint > pick this repo. Free plan sleeps when idle.
+# With DATABASE_URL and SUPABASE_URL set, data lives in Supabase and every request needs a sign-in.
 services:
   - type: web
     name: consentscope-api
@@ -14,5 +14,9 @@ services:
         value: https://privacy-lens-git-main-krishh2.vercel.app   # the deployed website's address (comma-separate to add more)
       - key: GOOGLE_SAFE_BROWSING_API_KEY
         sync: false   # Render asks for it on first deploy; paste the key there, never in the repo
+      - key: SUPABASE_URL
+        value: https://cdpfxiquqeyhcxewegmu.supabase.co   # turns sign-in on; public, not a secret
+      - key: DATABASE_URL
+        sync: false   # Supabase > Connect > Session pooler connection string (secret, paste in Render only)
       - key: PYTHON_VERSION
         value: 3.12.7

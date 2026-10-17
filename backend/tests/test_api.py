@@ -36,7 +36,7 @@ def test_example_scores_match_their_factors():
 
 
 def test_health(client):
-    assert client.get("/health").json() == {"status": "ok", "version": "1.0.0"}
+    assert client.get("/health").json() == {"status": "ok", "version": "1.0.0", "auth": "local"}
 
 
 def test_audit_infers_purpose_and_lists_site(demo):

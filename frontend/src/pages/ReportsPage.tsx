@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { generateReportFromSites } from '../services/reportService';
 import { useSites } from '../services/siteStore';
-import { reportUrl } from '../api/client';
+import { openReport } from '../api/client';
 import { ScoreGauge } from '../components/common/ScoreGauge';
 
 export const ReportsPage: React.FC = () => {
@@ -187,7 +187,7 @@ export const ReportsPage: React.FC = () => {
                     <td className="py-2.5 px-3 font-medium text-white">
                       {site.display_name} <span className="text-[#71717A] text-[10px] font-mono">({site.origin})</span>
                       {mode === 'live' && (
-                        <a href={reportUrl(site.origin)} target="_blank" rel="noreferrer" className="no-print ml-2 text-[10px] font-mono text-[#F5D76E] hover:underline">
+                        <a href="#" onClick={e => { e.preventDefault(); openReport(site.origin).catch(err => alert((err as Error).message)); }} className="no-print ml-2 text-[10px] font-mono text-[#F5D76E] hover:underline">
                           report ↗
                         </a>
                       )}

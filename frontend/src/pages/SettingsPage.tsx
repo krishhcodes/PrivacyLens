@@ -14,6 +14,8 @@ import { loadSites, useSites } from '../services/siteStore';
 import { API_BASE } from '../api/client';
 import { useIntro } from '../experience/IntroProvider';
 import { getIntroPreference, setIntroPreference } from '../experience/introStorage';
+import { authEnabled } from '../api/auth';
+import { AccountCard } from '../components/common/AccountCard';
 
 export const SettingsPage: React.FC = () => {
   const [resetModalOpen, setResetModalOpen] = useState(false);
@@ -79,6 +81,8 @@ export const SettingsPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {authEnabled && <AccountCard />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Reset & Persistence Card */}
@@ -151,7 +155,7 @@ export const SettingsPage: React.FC = () => {
                 </span>
               </div>
               <div className="text-[10px] text-[#71717A] leading-relaxed">
-                When on, the backend sends each audited site's address (domain only) to Google to check it. Set GOOGLE_SAFE_BROWSING_API_KEY in backend\.env.
+                When on, the backend sends each audited site's address (domain only) to Google to check it. Set GOOGLE_SAFE_BROWSING_API_KEY in backend\.env (or in Render's Environment tab when hosted).
               </div>
               {error && <div className="text-red-300 text-[11px] pt-1">{error}</div>}
             </div>
