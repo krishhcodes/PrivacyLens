@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Radar, AlertTriangle, RefreshCw, Menu, Sparkles } from 'lucide-react';
+import { Radar, AlertTriangle, RefreshCw, Menu, Sparkles, LogOut } from 'lucide-react';
+import { authEnabled, useAuth } from '../../api/auth';
+import { signOutEverywhere } from '../../services/accountService';
 import { runFullAuditScan } from '../../services/scannerService';
 import { useSites } from '../../services/siteStore';
 import { useIntro } from '../../experience/IntroProvider';
@@ -19,6 +21,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const { replayIntro } = useIntro();
+  const { session } = useAuth();
   const [isScanning, setIsScanning] = useState(false);
   const [scanStage, setScanStage] = useState('');
   const [scanPercent, setScanPercent] = useState(0);
@@ -38,7 +41,7 @@ export const TopBar: React.FC<TopBarProps> = ({
       case '/reports':
         return { title: 'Privacy Report', subtitle: 'Printable summary of all audited sites' };
       case '/settings':
-        return { title: 'Platform Settings', subtitle: 'Backend connection and cinematic intro' };
+        return { title: 'Platform Settings', subtitle: authEnabled ? 'Account, backend connection and cinematic intro' : 'Backend connection and cinematic intro' };
       default:
         return { title: 'PrivacyLens', subtitle: 'Browser permission privacy' };
     }
@@ -100,6 +103,17 @@ export const TopBar: React.FC<TopBarProps> = ({
       </div>
 
       <div className="flex items-center gap-2 md:gap-3">
+        {authEnabled && session && (
+          <button
+            type="button"
+            onClick={() => void signOutEverywhere()}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] text-[#B3B0A7] hover:text-[#F5D76E] border border-transparent hover:border-[#D4AF37]/25"
+            title={`Signed in as ${session.user.email ?? 'you'}. Sign out here and in the extension.`}
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span className="hidden md:inline max-w-[160px] truncate">{session.user.email ?? 'Sign out'}</span>
+          </button>
+        )}
         <button
           type="button"
           onClick={replayIntro}

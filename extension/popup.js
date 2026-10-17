@@ -100,7 +100,10 @@ async function analysis() {
       r ? h("div", { class: "note" }, r.disclaimer) : null);
     render();
   } catch (e) {
-    fill($("#risk"), h("p", { class: "offline" }, `Couldn't load analysis: ${e.message}`));
+    fill($("#risk"), e instanceof api.SignInNeeded
+      ? [h("p", { class: "offline" }, e.message),
+         h("button", { class: "small", onclick: () => chrome.tabs.create({ url: WEBSITE_URL }) }, "Sign in")]
+      : h("p", { class: "offline" }, `Couldn't load analysis: ${e.message}`));
   }
 }
 
@@ -163,7 +166,9 @@ async function main() {
   const cached = await getCachedLedger(origin);
   if (cached) { ledger = cached; render(); }
   $("#open-full").onclick = () => chrome.tabs.create({ url: `${WEBSITE_URL}${WEBSITE_URL.includes("?") ? "&" : "?"}origin=${encodeURIComponent(origin)}` });
-  $("#report").onclick = () => chrome.tabs.create({ url: api.reportUrl(origin) });
+  $("#report").onclick = async () => {
+    try { chrome.tabs.create({ url: await api.reportUrl(origin) }); } catch (e) { toast(e.message, { error: true }); }
+  };
   $("#reload-btn").onclick = () => { chrome.tabs.reload(tab.id); $("#reload").hidden = true; };
   await audit("popup_audit");
 }

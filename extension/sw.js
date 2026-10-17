@@ -69,12 +69,36 @@ async function autoAudit(sender, { title, states = {} }) {
   } catch { /* backend offline: try again on the next change or visit */ }
 }
 
+// Account link (website bridge): after you sign in, the website gives the extension its own device token.
+// Switching or clearing the account also forgets which sites were already sent, so the new account gets them.
+async function forgetSentSites() {
+  const all = await chrome.storage.local.get(null);
+  await chrome.storage.local.remove(Object.keys(all).filter((k) => k.startsWith("auto:")));
+}
+
+async function accountLink(type, payload) {
+  const { account } = await chrome.storage.local.get("account");
+  if (type === "getLink") {
+    return { ok: true, linked: Boolean(account?.token), userId: account?.userId, tokenId: account?.tokenId, email: account?.email };
+  }
+  if (type === "setLink") {
+    const { token, tokenId, userId, email } = payload;
+    if (typeof token !== "string" || !token.startsWith("cs_") || typeof userId !== "string") throw new Error("Invalid account link");
+    if (account?.userId !== userId) await forgetSentSites();
+    await chrome.storage.local.set({ account: { token, tokenId, userId, email: email ?? null } });
+    return { ok: true };
+  }
+  await chrome.storage.local.remove("account");
+  await forgetSentSites();
+  return { ok: true };
+}
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg?.type === "pageStates" && sender.id === chrome.runtime.id) {
     autoAudit(sender, msg.payload || {});
     return false;
   }
-  if (!msg || (msg.type !== "ping" && msg.type !== "setPermission")) return false;
+  if (!msg || !["ping", "setPermission", "getLink", "setLink", "clearLink"].includes(msg.type)) return false;
   if (!trustedWebsite(sender)) {
     sendResponse({ ok: false, error: "This website is not allowed to control ConsentScope." });
     return false;
@@ -82,6 +106,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "ping") {
     sendResponse({ ok: true, version: chrome.runtime.getManifest().version });
     return false;
+  }
+  if (msg.type !== "setPermission") {
+    accountLink(msg.type, msg.payload || {})
+      .then(sendResponse)
+      .catch((e) => sendResponse({ ok: false, error: e.message }));
+    return true;
   }
   changePermission(msg.payload || {})
     .then(sendResponse)

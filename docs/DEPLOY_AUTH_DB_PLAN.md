@@ -1,6 +1,6 @@
 # Plan: deploy ConsentScope with accounts and a hosted database
 
-Status: plan only, nothing changed yet. Written 2026-10-17.
+Status: built 2026-10-17 (accounts, per-user Postgres, extension + scanner linking). Setup steps: [ACCOUNTS_SETUP.md](ACCOUNTS_SETUP.md).
 
 ## The short version
 

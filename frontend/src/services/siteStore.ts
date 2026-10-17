@@ -6,6 +6,7 @@ import * as api from '../api/client';
 import type { SiteDetail as ApiSiteDetail } from '../api/types';
 import type { SiteDetail } from '../types';
 import { MOCK_SITES } from '../data/mockSites';
+import { accessToken, authEnabled } from '../api/auth';
 
 export type DataMode = 'loading' | 'live' | 'offline';
 
@@ -42,6 +43,7 @@ export function loadSites(): Promise<void> {
   if (inflight) return inflight;
   inflight = (async () => {
     try {
+      if (authEnabled && !(await accessToken())) return; // signed out: nothing to load
       const { sites } = await api.getSites();
       // Only fetch details for sites that are new or were audited since the last load.
       const known = new Map(state.mode === 'live' ? state.sites.map(s => [s.origin, s]) : []);
@@ -77,6 +79,11 @@ export async function reloadSite(origin: string): Promise<SiteDetail | null> {
   const site = fromApi(await api.getSite(origin));
   setState({ sites: state.sites.map(s => (s.origin === site.origin ? site : s)) });
   return site;
+}
+
+/** Forget the loaded sites (after sign-out or "delete my data"). */
+export function resetSites(): void {
+  setState({ mode: 'loading', sites: [], error: null, loadedAt: null });
 }
 
 /** Replace one site in memory (offline demo edits). */

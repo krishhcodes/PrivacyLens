@@ -1,6 +1,9 @@
 fastapi>=0.110
 uvicorn>=0.27
 pydantic>=2.5
+# accounts (hosted mode): Supabase sign-in tokens and the Postgres database
+PyJWT[crypto]>=2.8
+psycopg[binary]>=3.1
 # tests
 pytest>=8
 httpx>=0.27

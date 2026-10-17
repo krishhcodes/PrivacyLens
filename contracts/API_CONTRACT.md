@@ -55,3 +55,22 @@ Each finding has `char_start`/`char_end` offsets into the submitted text. The do
 
 ## Google Safe Browsing (optional)
 Every `SiteSummary` and `SiteAssessment` has `safety: {status, threats[], checked_at}`. `status` is `safe`, `unsafe`, `not_checked` (no `GOOGLE_SAFE_BROWSING_API_KEY` on the backend, or not checked yet), `not_applicable` (local/private address, never sent) or `error` (retried after 10 min). Results are cached 24 h. With a key set, the backend sends each **audited** site's origin (domain only) to Google's v4 Lookup API; nothing else leaves the machine. An `unsafe` site gets a 50-point `SAFE-BROWSING` risk factor.
+
+## Accounts (hosted mode)
+`GET /health` returns `auth: "local"` or `"supabase"`.
+
+- **Local mode** (`SUPABASE_URL` and `SUPABASE_JWT_SECRET` unset): no sign-in; everything belongs to the user `local`. This is the laptop setup, unchanged. An older local database is migrated to that user automatically.
+- **Supabase mode**: every endpoint except `/health` needs `Authorization: Bearer <token>`, otherwise `401`. Every site, observation, action and finding belongs to one user; other users get `404` for it. The token is either
+  - a Supabase access token (the website, after Google or email-link sign-in), verified with the project's public keys at `{SUPABASE_URL}/auth/v1/.well-known/jwks.json`, or with `SUPABASE_JWT_SECRET` for HS256 projects; or
+  - a device token `cs_…` (the extension and the scanner). The website creates one per device; the backend stores only its SHA-256. Device tokens can send and read data but get `403` on account endpoints and on deletes.
+
+| Method | Path | What it does |
+|---|---|---|
+| GET | `/me` | `{user_id, email, auth}` |
+| DELETE | `/me/data` | Deletes all of this user's data and device tokens → `{deleted}` (number of sites) |
+| POST | `/me/tokens` | `{label}` → `{id, label, created_at, last_used_at, token}`; `token` is shown only here |
+| GET | `/me/tokens` | `{tokens: [{id, label, created_at, last_used_at}]}` |
+| DELETE | `/me/tokens/{id}` | Revokes one device token |
+| GET | `/sites/{origin}/report-link` | `{url}`: a report path signed for 10 minutes, for opening in a new tab (a tab can't send the header) |
+
+`DELETE /sites` and `DELETE /sites/{origin}` are scoped to the signed-in user. The Safe Browsing cache is shared across users (it holds only public origins and Google's verdict) and drops origins nobody has audited any more.

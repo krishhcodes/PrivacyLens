@@ -12,6 +12,10 @@ import { PolicyPage } from './pages/PolicyPage';
 import { SimulatorPage } from './pages/SimulatorPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { SignInPage } from './pages/SignInPage';
+import { authEnabled, useAuth } from './api/auth';
+import { linkExtension } from './services/accountService';
+import { loadSites, resetSites } from './services/siteStore';
 
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
@@ -21,6 +25,25 @@ const ScrollToTop: React.FC = () => {
   }, [pathname]);
 
   return null;
+};
+
+// With accounts on, nothing but the sign-in page shows until you are signed in.
+const AuthGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { ready, session } = useAuth();
+  const userId = session?.user.id;
+
+  useEffect(() => {
+    if (!authEnabled) return;
+    resetSites();
+    if (!session) return;
+    void loadSites();
+    linkExtension(session).catch(e => console.warn('Could not link the extension:', e));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  if (!authEnabled) return <>{children}</>;
+  if (!ready) return <div className="min-h-screen bg-[#07080B]" />;
+  return session ? <>{children}</> : <SignInPage />;
 };
 
 const AppFrame: React.FC = () => {
@@ -58,7 +81,9 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <IntroProvider>
         <ScrollToTop />
-        <AppFrame />
+        <AuthGate>
+          <AppFrame />
+        </AuthGate>
       </IntroProvider>
     </BrowserRouter>
   );

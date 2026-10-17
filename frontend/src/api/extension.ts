@@ -58,3 +58,23 @@ export async function setPermissionViaExtension(
   if (!r.ok) throw new Error(r.error || 'The extension could not change this permission.');
   return r;
 }
+
+// ---------- account link ----------
+// When accounts are on, the extension sends data with its own device token, which the website
+// creates after you sign in and hands over through the bridge. The extension never sees a password.
+export type ExtensionLink = { linked: boolean; userId?: string; tokenId?: string; email?: string | null };
+
+export async function getExtensionLink(): Promise<ExtensionLink | null> {
+  if (!(await isExtensionAvailable())) return null;
+  const r = await request('getLink') as BridgeResponse & ExtensionLink;
+  return r.ok ? { linked: Boolean(r.linked), userId: r.userId, tokenId: r.tokenId, email: r.email } : null;
+}
+
+export async function setExtensionLink(link: { token: string; tokenId: string; userId: string; email: string | null }): Promise<void> {
+  const r = await request('setLink', link);
+  if (!r.ok) throw new Error(r.error || 'The extension could not save the sign-in.');
+}
+
+export async function clearExtensionLink(): Promise<void> {
+  if (await isExtensionAvailable()) await request('clearLink');
+}

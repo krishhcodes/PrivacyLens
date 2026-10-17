@@ -150,9 +150,12 @@ def parse_preferences(path: Path) -> dict[str, list[dict]]:
     return {o: list(p.values()) for o, p in sorted(by_origin.items())}
 
 
-def upload(api: str, origin: str, observations: list[dict]) -> dict:
+def upload(api: str, origin: str, observations: list[dict], token: str | None = None) -> dict:
     body = json.dumps({"origin": origin, "source": "local_scan", "observations": observations}).encode()
-    req = urllib.request.Request(f"{api.rstrip('/')}/audits", data=body, headers={"Content-Type": "application/json"}, method="POST")
+    headers = {"Content-Type": "application/json"}
+    if token:  # hosted backend with accounts: a device token from the website (Settings → Account)
+        headers["Authorization"] = f"Bearer {token}"
+    req = urllib.request.Request(f"{api.rstrip('/')}/audits", data=body, headers=headers, method="POST")
     with urllib.request.urlopen(req, timeout=15) as r:
         return json.load(r)
 
@@ -163,6 +166,9 @@ def main(argv=None) -> int:
     ap.add_argument("--browser", action="append", choices=["chrome", "chromium", "edge", "brave"], help="limit to a browser (repeatable)")
     ap.add_argument("--preferences", type=Path, help="read this Preferences file instead of searching")
     ap.add_argument("--dry-run", action="store_true", help="print findings, don't upload")
+    ap.add_argument("--token", default=os.environ.get("CONSENTSCOPE_TOKEN"),
+                    help="device token from the website (Settings → Account) when the backend has sign-in; "
+                         "or set CONSENTSCOPE_TOKEN")
     args = ap.parse_args(argv)
 
     sources = [("file", args.preferences.parent.name, args.preferences)] if args.preferences else find_preferences(args.browser or [])
@@ -194,7 +200,7 @@ def main(argv=None) -> int:
         for o in sorted(obs, key=lambda x: x["setting_changed_at"] or ""):
             latest[o["permission"]] = o
         try:
-            upload(args.api, origin, list(latest.values()))
+            upload(args.api, origin, list(latest.values()), args.token)
             ok += 1
         except (urllib.error.URLError, OSError) as e:
             failed += 1

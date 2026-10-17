@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { runFullAuditScan } from '../services/scannerService';
 import { useSites } from '../services/siteStore';
-import { reportUrl } from '../api/client';
+import { openReport } from '../api/client';
 import { ExtensionPopupSim } from '../components/scanner/ExtensionPopupSim';
 import { SiteLedgerTable } from '../components/scanner/SiteLedgerTable';
 import { ScoreBreakdown } from '../components/common/ScoreBreakdown';
@@ -258,9 +258,8 @@ export const ScannerPage: React.FC = () => {
               <div className="flex items-center gap-2">
               {mode === 'live' && (
                 <a
-                  href={reportUrl(selectedSite.origin)}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#"
+                  onClick={e => { e.preventDefault(); openReport(selectedSite.origin).catch(err => alert((err as Error).message)); }}
                   className="px-5 py-2 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 text-[#F5D76E] border border-[#D4AF37]/40 text-xs font-medium"
                 >
                   Printable report ↗

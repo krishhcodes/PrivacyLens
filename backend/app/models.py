@@ -204,3 +204,33 @@ class DeleteResponse(BaseModel):
 class Health(BaseModel):
     status: Literal["ok"]
     version: str
+    auth: Literal["local", "supabase"] = "local"  # "supabase": every other endpoint needs a sign-in token
+
+
+class Me(BaseModel):
+    user_id: str
+    email: str | None = None
+    auth: Literal["local", "supabase"]
+
+
+class DeviceTokenRequest(BaseModel):
+    label: str = Field("Device", min_length=1, max_length=60)
+
+
+class DeviceToken(BaseModel):
+    id: str
+    label: str
+    created_at: str
+    last_used_at: str | None = None
+
+
+class DeviceTokenCreated(DeviceToken):
+    token: str = Field(description="Shown once. Paste it into the scanner, or the website hands it to the extension.")
+
+
+class DeviceTokenList(BaseModel):
+    tokens: list[DeviceToken]
+
+
+class ReportLink(BaseModel):
+    url: str = Field(description="Path on this API (append to the API base); valid for 10 minutes.")
